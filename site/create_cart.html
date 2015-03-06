@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<title>Cart</title>
+<body>
+	<table border="2" bgcolor="green" id="cart-1">
+		<tr class="cart-headings">
+			<th>
+				Table<br>Line
+			</th>
+			<th>
+				Quantity
+			</th>
+			<th>
+				Product Code
+			</th>
+			<th>
+                Product Description
+            </th>
+			<th>
+				Price Each
+			</th>
+			<th>
+				Subtotal
+			</th>
+			<th>
+				Actions
+			</th>
+		</tr>
+		<tr class="cart-line">
+			<th class="line-number">
+				1
+			</th>
+			<td class="line-quantity">
+				<input type="number" value="11">
+			</td>
+			<td class="line-product-code">
+				the code
+			</td>
+			<td class="line-procuct-description">
+                Description
+            <td class="line-price-each">
+                3
+            </td>
+            <td class="line-subtotal">
+                30
+            </td>
+			<td class="line-actions">
+                <a href="#remove">Remove</a>
+            </td>
+		<tr class="cart-line">
+			<th class="line-number">
+				2
+			</th>
+			<td class="line-quantity">
+				<input type="number" value="22">
+			</td>
+			<td class="line-product-code">
+				another code
+			</td>
+			<td class="line-procuct-description">
+                Description
+            </td>
+			<td class="line-price-each"> 
+				4
+			<td class="line-subtotal">
+                7
+            </td>
+			<td class="line-actions">
+                <a href="#remove">Remove</a>
+            </td>
+		</tr>
+		<tr class="cart-line-total">
+                <td class="line-number" colspan="5" align="right">
+                    Total:
+                </td>
+                <td id="cart-total">
+                    240
+                </td>
+                <td class="line-actions">
+                    &nbsp;
+                </td>
+            </tr>
+	</table>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var table = document.getElementById("cart-1");
+        var lines = table.getElementsByClassName("cart-line")
+        var line_count = lines.length;
+
+
+        var getTotal = function () {
+            var total = 0;
+
+            for (var i = 0; i < line_count; i++) {
+                var line = lines[i];
+
+                var qty = line.getElementsByClassName("line-quantity")[0];
+                var quantity = parseFloat(qty.getElementsByTagName("input")[0].value);
+
+                var price = parseFloat(line.getElementsByClassName("line-price-each")[0].innerHTML);
+                var subtotalElement = line.getElementsByClassName("line-subtotal")[0];
+
+                var subTotal = quantity * price;
+                subtotalElement.innerHTML = subTotal;
+                total += subTotal;
+            }
+            var totalElement = document.getElementById("cart-total");
+            totalElement.innerHTML = total;
+        };
+
+        for (var c = 0; c < line_count; c++) {
+            var line = lines[c];
+            var quantityElement = line.getElementsByTagName("input")[0];
+            quantityElement.addEventListener("change", function () {
+                getTotal();
+            });
+        }
+        getTotal();
+    });
+
+</script>
+</body>
+
+
+</html>
